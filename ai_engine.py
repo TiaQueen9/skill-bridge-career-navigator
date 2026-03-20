@@ -16,6 +16,20 @@ load_dotenv()
 
 logger = logging.getLogger(__name__)
 
+
+def _get_api_key() -> str:
+    """Get GROQ_API_KEY from Streamlit secrets, env var, or .env file."""
+    # Try Streamlit secrets first (for Streamlit Cloud deployment)
+    try:
+        import streamlit as st
+        key = st.secrets.get("GROQ_API_KEY", "")
+        if key:
+            return key.strip()
+    except Exception:
+        pass
+    # Fall back to environment variable / .env
+    return os.environ.get("GROQ_API_KEY", "").strip()
+
 # Keyword-based category mapping for the fallback categorizer
 _CATEGORY_KEYWORDS: dict[str, list[str]] = {
     "Programming Languages": [
@@ -114,7 +128,7 @@ class GroqCategorizer(SkillCategorizerInterface):
     def __init__(self) -> None:
         from groq import Groq
         self._client = Groq(
-            api_key=os.environ.get("GROQ_API_KEY", ""),
+            api_key=_get_api_key(),
             timeout=self.TIMEOUT,
         )
         self._fallback = FallbackCategorizer()
@@ -170,7 +184,7 @@ class GroqCategorizer(SkillCategorizerInterface):
 
 def get_categorizer() -> SkillCategorizerInterface:
     """Factory: return GroqCategorizer if GROQ_API_KEY is set, else FallbackCategorizer."""
-    api_key = os.environ.get("GROQ_API_KEY", "").strip()
+    api_key = _get_api_key()
     if api_key:
         try:
             return GroqCategorizer()
