@@ -101,6 +101,10 @@ if profile:
         col3.metric("Target", profile.target_role)
         st.write("**Skills:**", ", ".join(profile.skills))
 
+        # Formatted profile summary (from profile_printer.py)
+        with st.expander("📋 Full Profile Summary", expanded=False):
+            st.code(format_profile(profile), language=None)
+
 # ============================================================
 # SECTION 2: Job Catalog & Gap Analysis
 # ============================================================
