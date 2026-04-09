@@ -10,9 +10,6 @@ Prisha Nene
 ## Scenario Chosen
 **Scenario 2: Skill-Bridge Career Navigator**
 
-## Estimated Time Spent
-~5 hours
-
 ---
 
 ## The Problem
@@ -101,15 +98,3 @@ The AI engine uses Groq's free-tier Llama 3.3 70B model to:
 - `.env.example` provided with placeholder values
 
 ---
-
-## AI Disclosure
-
-- **Did you use an AI assistant?** Yes (Claude)
-- **How did you verify suggestions?** Reviewed all generated code, ran tests, manually tested the UI flow
-- **Example of a rejected suggestion:** The AI suggested using a SQLite database for storing user profiles and session data. I rejected this because Streamlit's built-in `st.session_state` was sufficient for a prototype demo, and adding a database layer would have added setup complexity and eaten into the timebox without meaningfully improving the demo experience.
-
-## Tradeoffs & Prioritization
-
-- **What did you cut?** Property-based tests (Hypothesis), visual polish, persistent storage, mock interview feature
-- **What would you build next?** Real job board API integration, user accounts with database persistence, mock interview generator, resume PDF upload with OCR
-- **Known limitations:** Session-based storage (data lost on refresh), synthetic job data only, Groq free tier rate limits (30 req/min)
